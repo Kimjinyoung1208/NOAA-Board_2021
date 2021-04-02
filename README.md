@@ -1,5 +1,10 @@
 ## 게시판 만들기
 
+### 참고 페이지
+- spring : https://all-record.tistory.com/174
+- mybatis : https://addio3305.tistory.com/62
+- postgresql : https://osc131.tistory.com/48
+
 1. 프로그램 설치 및 세팅
     - postgreSQL 9.x
     - jdk 1.8
