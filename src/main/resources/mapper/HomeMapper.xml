@@ -30,4 +30,16 @@
 		)
 </insert>
 
+<select id="detail" resultType="com.board.dto.HomeDto">
+	SELECT
+		bno
+		, title
+		, writer
+		, contents
+	FROM
+		board
+	WHERE
+		bno = #{bno}
+</select>
+
 </mapper> 

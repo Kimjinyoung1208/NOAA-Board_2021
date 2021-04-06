@@ -39,11 +39,22 @@ public class HomeController {
 		
 	}
 	
-	@RequestMapping(value = "/write", method = RequestMethod.POST)
+	@RequestMapping(value = "/detail", method = RequestMethod.POST)
 	public String postWrite(HomeDto homeDto) throws Exception {
 		homeService.write(homeDto);
 		
 		return "redirect:/";
+	}
+	
+	@RequestMapping(value = "/detail", method = RequestMethod.GET)
+	public String getDetail(Model model, int bno) throws Exception {
+		HomeDto data = homeService.detail(bno);
+		
+		try {
+			model.addAttribute("detail", data);
+		} catch ( Exception e ) {}
+		
+		return "detail";
 	}
 	
 }

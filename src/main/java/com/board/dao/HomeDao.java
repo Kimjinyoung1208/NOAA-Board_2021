@@ -24,4 +24,8 @@ public class HomeDao {
 		  sqlSession.insert(namespace + ".write", homeDto);
 	  }
 	  
+	  public HomeDto detail(int bno) throws Exception {
+		  return sqlSession.selectOne(namespace + ".detail", bno);
+	  }
+	  
 }

@@ -21,5 +21,9 @@ public class HomeService {
 	public void write(HomeDto homeDto) throws Exception {
 		homeDao.write(homeDto);
 	}
+	
+	public HomeDto detail(int bno) throws Exception {
+		return homeDao.detail(bno);
+	}
 
 }
