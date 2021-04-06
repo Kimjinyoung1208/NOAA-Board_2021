@@ -14,9 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.board.dto.HomeDto;
 import com.board.service.HomeService;
 
-/**
- * Handles requests for the application home page.
- */
 @Controller
 public class HomeController {
 	
@@ -25,12 +22,8 @@ public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String getList(Model model) throws Exception {
-		
 		List<HomeDto> list = null;
 		list = homeService.list();
 		
@@ -39,6 +32,18 @@ public class HomeController {
 		} catch ( Exception e ) {}
 		
 		return "home";
+	}
+	
+	@RequestMapping(value = "/write", method = RequestMethod.GET)
+	public void getWrite() throws Exception {
+		
+	}
+	
+	@RequestMapping(value = "/write", method = RequestMethod.POST)
+	public String postWrite(HomeDto homeDto) throws Exception {
+		homeService.write(homeDto);
+		
+		return "redirect:/";
 	}
 	
 }

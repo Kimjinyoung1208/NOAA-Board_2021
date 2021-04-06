@@ -9,7 +9,7 @@ public class HomeDto {
 	private String contents;
 	private String writer;
 	private int viewcnt;
-	private Date regdate;
+	private String regdate;
 	
 	public int getBno() {
 		return bno;
@@ -41,10 +41,10 @@ public class HomeDto {
 	public void setViewcnt(int viewcnt) {
 		this.viewcnt = viewcnt;
 	}
-	public Date getRegdate() {
+	public String getRegdate() {
 		return regdate;
 	}
-	public void setRegdate(Date regdate) {
+	public void setRegdate(String regdate) {
 		this.regdate = regdate;
 	}
 

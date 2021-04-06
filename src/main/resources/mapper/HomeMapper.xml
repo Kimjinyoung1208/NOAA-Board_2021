@@ -10,9 +10,24 @@
 		, contents
 		, writer
 		, viewcnt
-		, writer
+		, to_char(regdate, 'YYYY-MM-DD HH24:MI') AS regdate
 	FROM
 		board
 </select>
+
+<insert id="write" parameterType="com.board.dto.HomeDto">
+	INSERT INTO board 
+		(
+			title
+			, writer 
+			, contents
+		)
+	VALUES
+		(
+			#{title}
+			, #{writer}
+			, #{contents}
+		)
+</insert>
 
 </mapper> 

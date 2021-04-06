@@ -1,10 +1,17 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ page session="false" %>
+<%@ page import="java.util.Date" %>
+<%@page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.sql.*" %>
 <html>
+<style>
+	table, th, td { border: 1px solid black; text-align: center; }
+	form { margin-top: 10px; }
+</style>
 <head>
-	<title>Home</title>
+	<title>게시판 홈</title>
 </head>
 <body>
 
@@ -32,6 +39,10 @@
 			</c:forEach>
 		</tbody>
 	</table>
+	
+	<form>
+		<input type="button" value="작성" onclick="location.href='/write'" />
+	</form>
 
 </body>
 </html>

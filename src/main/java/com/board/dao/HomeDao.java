@@ -17,8 +17,11 @@ public class HomeDao {
 	  private static String namespace = "com.board.mapper.Home";
 	  
 	  public List<HomeDto> list() throws Exception { 
-		  return sqlSession.selectList(namespace+".list"); 
+		  return sqlSession.selectList(namespace + ".list"); 
 	  }
-	 
-
+	  
+	  public void write(HomeDto homeDto) throws Exception {
+		  sqlSession.insert(namespace + ".write", homeDto);
+	  }
+	  
 }

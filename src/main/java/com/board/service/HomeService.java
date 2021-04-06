@@ -17,5 +17,9 @@ public class HomeService {
 	public List<HomeDto> list() throws Exception {
 		return homeDao.list();
 	}
+	
+	public void write(HomeDto homeDto) throws Exception {
+		homeDao.write(homeDto);
+	}
 
 }
