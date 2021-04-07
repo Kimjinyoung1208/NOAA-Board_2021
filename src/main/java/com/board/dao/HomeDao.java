@@ -32,4 +32,8 @@ public class HomeDao {
 		  sqlSession.update(namespace + ".update", homeDto);
 	  }
 	  
+	  public void delete(int bno) throws Exception {
+		  sqlSession.delete(namespace + ".delete", bno);
+	  }
+	  
 }

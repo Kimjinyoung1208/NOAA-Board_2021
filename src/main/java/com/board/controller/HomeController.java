@@ -73,4 +73,12 @@ public class HomeController {
 		return "redirect:/";
 	}
 	
+	@RequestMapping(value = "/delete",method = RequestMethod.GET)
+	public String getDelete(Model model, int bno) throws Exception {
+		homeService.delete(bno);
+		
+		return "redirect:/";
+	}
+	
+	
 }
