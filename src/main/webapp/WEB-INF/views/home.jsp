@@ -40,7 +40,7 @@
 		</tbody>
 	</table>
 	
-	<form>
+	<form method="get">
 		<input type="button" value="작성" onclick="location.href='/write'" />
 	</form>
 

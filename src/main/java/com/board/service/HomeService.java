@@ -25,5 +25,9 @@ public class HomeService {
 	public HomeDto detail(int bno) throws Exception {
 		return homeDao.detail(bno);
 	}
+	
+	public void update(HomeDto homeDto) throws Exception {
+		homeDao.update(homeDto);
+	}
 
 }

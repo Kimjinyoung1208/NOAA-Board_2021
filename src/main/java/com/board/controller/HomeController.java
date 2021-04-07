@@ -39,7 +39,7 @@ public class HomeController {
 		
 	}
 	
-	@RequestMapping(value = "/detail", method = RequestMethod.POST)
+	@RequestMapping(value = "/write", method = RequestMethod.POST)
 	public String postWrite(HomeDto homeDto) throws Exception {
 		homeService.write(homeDto);
 		
@@ -55,6 +55,22 @@ public class HomeController {
 		} catch ( Exception e ) {}
 		
 		return "detail";
+	}
+	
+	@RequestMapping(value = "/update", method = RequestMethod.GET)
+	public String getUpdate(Model model, int bno) throws Exception {
+		HomeDto data = homeService.detail(bno);
+		try {
+			model.addAttribute("detail", data);
+		} catch ( Exception e ) {}
+		
+		return "/update";
+	}
+	
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public String postUpdate(HomeDto homeDto) throws Exception {
+		homeService.update(homeDto);
+		return "redirect:/";
 	}
 	
 }

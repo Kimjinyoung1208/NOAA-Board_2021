@@ -7,21 +7,25 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<style>
+	form label { display: block; margin-bottom: 10px; }
+</style>
 <title>게시물 수정</title>
 </head>
 <body>
 
-	<form name="update" method="post" action="/update?bno=${data.bno}">
+	<form name="update" method="post" action="/update?bno=${detail.bno}">
 		<label>제목: 
-			<input type="text" name="title" />
+			<input type="text" name="title" value="${detail.title}" />
 		</label>
 		<label>작성자: 
-			<input type="text" name="writer" />
+			<input type="text" name="writer" value="${detail.writer}" />
 		</label>
 		<label>내용: 
-			<textarea name="contents" placeholder="내용 작성"></textarea>
+			<textarea name="contents">${detail.contents}</textarea>
 		</label>
 		<input type="submit" value="작성" />
+		<input type="button" value="취소" />
 	</form>
 
 </body>

@@ -17,10 +17,8 @@
 		<label>제목: ${detail.title}</label>
 		<label>작성자: ${detail.writer}</label>
 		<label>내용: ${detail.contents}</label>
-		<form method="post">
-			<input type="submit" value="수정" />
-			<input type="submit" value="삭제" />
-		</form>
+		<input type="button" value="수정" onclick="location.href='/update?bno=${detail.bno}'" />
+		<input type="button" value="삭제" />
 	
 </body>
 </html>

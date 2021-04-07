@@ -28,4 +28,8 @@ public class HomeDao {
 		  return sqlSession.selectOne(namespace + ".detail", bno);
 	  }
 	  
+	  public void update(HomeDto homeDto) throws Exception {
+		  sqlSession.update(namespace + ".update", homeDto);
+	  }
+	  
 }

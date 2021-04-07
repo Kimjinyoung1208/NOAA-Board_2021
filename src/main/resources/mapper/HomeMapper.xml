@@ -13,6 +13,8 @@
 		, to_char(regdate, 'YYYY-MM-DD HH24:MI') AS regdate
 	FROM
 		board
+	ORDER BY
+		bno DESC
 </select>
 
 <insert id="write" parameterType="com.board.dto.HomeDto">
@@ -41,5 +43,16 @@
 	WHERE
 		bno = #{bno}
 </select>
+
+<update id="update" parameterType="com.board.dto.HomeDto">
+	UPDATE 
+		board
+	SET
+		title = #{title}
+		, contents = #{contents}
+		, writer = #{writer}
+	WHERE
+		bno = #{bno}
+</update>
 
 </mapper> 
