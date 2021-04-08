@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.board.dto.HomeDto;
 import com.board.service.HomeService;
@@ -22,13 +23,20 @@ public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String getList(Model model) throws Exception {
+	@RequestMapping(value = "/?num={num}", method = RequestMethod.GET)
+	public String getPaging(Model model, @RequestParam("num") int num) throws Exception {
+		int count = homeService.count();
+		int postNum = 10;
+		int pageNum = (int)Math.ceil((double)count/postNum);
+		int displayPost = (num-1)*postNum;
+		
 		List<HomeDto> list = null;
-		list = homeService.list();
+//		list = homeService.list();
+		list = homeService.paging(postNum, displayPost);
 		
 		try {
 			model.addAttribute("list", list);
+			model.addAttribute("pageNum", pageNum);
 		} catch ( Exception e ) {}
 		
 		return "home";
@@ -60,16 +68,18 @@ public class HomeController {
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
 	public String getUpdate(Model model, int bno) throws Exception {
 		HomeDto data = homeService.detail(bno);
+		
 		try {
 			model.addAttribute("detail", data);
 		} catch ( Exception e ) {}
 		
-		return "/update";
+		return "update";
 	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public String postUpdate(HomeDto homeDto) throws Exception {
 		homeService.update(homeDto);
+		
 		return "redirect:/";
 	}
 	
@@ -79,6 +89,5 @@ public class HomeController {
 		
 		return "redirect:/";
 	}
-	
-	
+
 }

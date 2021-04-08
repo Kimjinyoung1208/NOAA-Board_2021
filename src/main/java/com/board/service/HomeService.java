@@ -32,6 +32,14 @@ public class HomeService {
 	
 	public void delete(int bno) throws Exception {
 		homeDao.delete(bno);
-	  }
-
+	}
+	
+	public int count() throws Exception {
+		return homeDao.count();
+	}
+	
+	public List<HomeDto> paging(int postNum, int displayPost) throws Exception {
+		return homeDao.paging(postNum, displayPost);
+	}
+	
 }

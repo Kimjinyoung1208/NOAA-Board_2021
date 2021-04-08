@@ -1,5 +1,6 @@
 package com.board.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -34,6 +35,19 @@ public class HomeDao {
 	  
 	  public void delete(int bno) throws Exception {
 		  sqlSession.delete(namespace + ".delete", bno);
+	  }
+	  
+	  public int count() throws Exception {
+		  return sqlSession.selectOne(namespace + ".count");
+	  }
+	  
+	  public List<HomeDto> paging(int postNum, int displayPost) throws Exception {
+		  HashMap<String, Integer> data = new HashMap<String, Integer>();
+		  
+		  data.put("postNum", postNum);
+		  data.put("displayPost", displayPost);
+		  
+		  return sqlSession.selectList(namespace + ".paging", data);
 	  }
 	  
 }
