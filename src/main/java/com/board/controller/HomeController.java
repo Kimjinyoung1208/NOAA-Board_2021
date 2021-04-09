@@ -3,6 +3,7 @@ package com.board.controller;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +25,8 @@ public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String getPaging(Model model, @RequestParam("num") int num) throws Exception {
+	public String getPaging(Model model, HttpServletRequest request) throws Exception {
+		int num = ( request.getParameter("num") != null ) ? Integer.parseInt(request.getParameter("num")) : 1;
 		// 게시물 갯수
 		int count = homeService.count();
 		// 한 페이지 당 게시물 갯수

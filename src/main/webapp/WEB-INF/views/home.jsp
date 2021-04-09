@@ -15,10 +15,6 @@
 </head>
 <body>
 
-	<%-- 
-		request.getAttribute("num");
-	--%>
-
 	<table>
 		<thead>
 			<tr>
