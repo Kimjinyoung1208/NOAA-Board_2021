@@ -15,6 +15,10 @@
 </head>
 <body>
 
+	<%-- 
+		request.getAttribute("num");
+	--%>
+
 	<table>
 		<thead>
 			<tr>
@@ -39,6 +43,14 @@
 			</c:forEach>
 		</tbody>
 	</table>
+	
+	<div>
+		 <c:forEach begin="1" end="${pageNum}" var="num">
+			<span>
+				<a href="/?num=${num}">${num}</a>
+			</span>
+		 </c:forEach>
+	</div>
 	
 	<form method="get">
 		<input type="button" value="작성" onclick="location.href='/write'" />

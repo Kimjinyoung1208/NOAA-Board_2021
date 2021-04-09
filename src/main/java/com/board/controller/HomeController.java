@@ -23,15 +23,18 @@ public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
-	@RequestMapping(value = "/?num={num}", method = RequestMethod.GET)
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String getPaging(Model model, @RequestParam("num") int num) throws Exception {
+		// 게시물 갯수
 		int count = homeService.count();
+		// 한 페이지 당 게시물 갯수
 		int postNum = 10;
-		int pageNum = (int)Math.ceil((double)count/postNum);
-		int displayPost = (num-1)*postNum;
+		// 페이지 갯수
+		int pageNum = (int)Math.ceil((double)count / postNum);
+		// 출력할 게시물
+		int displayPost = (num - 1) * postNum;
 		
 		List<HomeDto> list = null;
-//		list = homeService.list();
 		list = homeService.paging(postNum, displayPost);
 		
 		try {
