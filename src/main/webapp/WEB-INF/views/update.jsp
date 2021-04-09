@@ -25,7 +25,7 @@
 			<textarea name="contents">${detail.contents}</textarea>
 		</label>
 		<input type="submit" value="작성" />
-		<input type="button" value="취소" />
+		<a href="/"><button>취소</button></a>
 	</form>
 
 </body>
