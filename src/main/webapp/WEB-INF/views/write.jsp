@@ -12,13 +12,13 @@
 	
 	<form method="post">
 		<label>제목: 
-			<input type="text" name="title" />
+			<input type="text" name="title" required />
 		</label>
 		<label>작성자: 
-			<input type="text" name="writer" />
+			<input type="text" name="writer" required />
 		</label>
 		<label>내용: 
-			<textarea name="contents" placeholder="내용 작성"></textarea>
+			<textarea name="contents" placeholder="내용 작성" required></textarea>
 		</label>
 		<input type="submit" value="작성" />
 	</form>

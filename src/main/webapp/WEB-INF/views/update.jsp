@@ -16,13 +16,13 @@
 
 	<form name="update" method="post" action="/update?bno=${detail.bno}">
 		<label>제목: 
-			<input type="text" name="title" value="${detail.title}" />
+			<input type="text" name="title" value="${detail.title}" required />
 		</label>
 		<label>작성자: 
-			<input type="text" name="writer" value="${detail.writer}" />
+			<input type="text" name="writer" value="${detail.writer}" required />
 		</label>
 		<label>내용: 
-			<textarea name="contents">${detail.contents}</textarea>
+			<textarea name="contents" required>${detail.contents}</textarea>
 		</label>
 		<input type="submit" value="작성" />
 		<a href="/"><button>취소</button></a>
