@@ -46,8 +46,12 @@
 	
 	<div>
 		<c:if test="${prev}">
+			<span>[ <a href="/?num=1">처음</a> ]</span>
+		</c:if>
+		<c:if test="${prev}">
 			<span>[ <a href="/?num=${startPageNum - 1}">이전</a> ]</span>
 		</c:if>
+		
 		<c:forEach begin="${startPageNum}" end="${endPageNum}" var="num">
 			<span>
 				<c:if test="${select != num}">
@@ -58,8 +62,12 @@
 				</c:if>
 			</span>
 		</c:forEach>
+		
 		<c:if test="${next}">
 			<span>[ <a href="/?num=${endPageNum + 1}">다음</a> ]</span>
+		</c:if>
+		<c:if test="${next}">
+			<span>[ <a href="/?num=${pageNum}">끝</a> ]</span>
 		</c:if>
 	
 <%-- 		 <c:forEach begin="1" end="${pageNum}" var="num"> --%>
