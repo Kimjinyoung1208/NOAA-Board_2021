@@ -17,8 +17,8 @@
 	</select>
 	
 	<insert id="write" parameterType="com.board.dto.FileDto" useGeneratedKeys="true" keyProperty="bno">
-		<selectKey keyProperty="bno" resultType="int" order="BEFORE">
-			SELECT nextval('board_bno_seq')+1
+		<selectKey keyProperty="bno" resultType="int" order="AFTER">
+			SELECT CURRVAL('board_bno_seq')
 		</selectKey>
 			INSERT INTO board 
 				(
