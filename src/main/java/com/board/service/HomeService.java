@@ -37,32 +37,8 @@ public class HomeService {
 		}
 	}
 	
-	public HomeDto detail(int bno) throws Exception {
-		return homeDao.detail(bno);
-	}
-	
-	public void update(HomeDto homeDto) throws Exception {
-		homeDao.update(homeDto);
-	}
-	
-	public void delete(int bno) throws Exception {
-		homeDao.delete(bno);
-	}
-	
-	public int count() throws Exception {
-		return homeDao.count();
-	}
-	
-	public List<HomeDto> paging(int postNum, int displayPost) throws Exception {
-		return homeDao.paging(postNum, displayPost);
-	}
-	
-	
-	
-	
-	/////
 	public List<Map<String, Object>> parseInsertFileInfo(FileDto fileDto, MultipartHttpServletRequest mreq) throws Exception {
-			
+		
 		String filePath = "C:\\fileUpload\\";
 	
 		Iterator<String> iterator = mreq.getFileNames();
@@ -107,6 +83,25 @@ public class HomeService {
 	public static String getRandomString() {
 		return UUID.randomUUID().toString().replaceAll("-", "");
 	}
-
+	
+	public HomeDto detail(int bno) throws Exception {
+		return homeDao.detail(bno);
+	}
+	
+	public void update(HomeDto homeDto) throws Exception {
+		homeDao.update(homeDto);
+	}
+	
+	public void delete(int bno) throws Exception {
+		homeDao.delete(bno);
+	}
+	
+	public int count() throws Exception {
+		return homeDao.count();
+	}
+	
+	public List<HomeDto> paging(int postNum, int displayPost) throws Exception {
+		return homeDao.paging(postNum, displayPost);
+	}
 	
 }
