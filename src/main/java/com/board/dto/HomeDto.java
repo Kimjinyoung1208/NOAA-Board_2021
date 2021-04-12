@@ -1,6 +1,6 @@
 package com.board.dto;
 
-import java.util.Date;
+import org.springframework.web.multipart.MultipartFile;
 
 public class HomeDto {
 	
@@ -10,6 +10,9 @@ public class HomeDto {
 	private String writer;
 	private int viewcnt;
 	private String regdate;
+	
+	private String fileName;
+	private MultipartFile uploadFile;
 	
 	public int getBno() {
 		return bno;
@@ -46,6 +49,18 @@ public class HomeDto {
 	}
 	public void setRegdate(String regdate) {
 		this.regdate = regdate;
+	}
+	public String getFileName() {
+		return fileName;
+	}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+	public MultipartFile getUploadFile() {
+		return uploadFile;
+	}
+	public void setUploadFile(MultipartFile uploadFile) {
+		this.uploadFile = uploadFile;
 	}
 
 }
