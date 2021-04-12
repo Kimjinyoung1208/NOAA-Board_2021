@@ -16,18 +16,38 @@
 		ORDER BY bno DESC
 	</select>
 	
-	<insert id="write" parameterType="com.board.dto.HomeDto">
-		INSERT INTO board 
+	<insert id="write" parameterType="com.board.dto.FileDto" useGeneratedKeys="true" keyProperty="bno">
+		<selectKey keyProperty="bno" resultType="int" order="BEFORE">
+			SELECT nextval('board_bno_seq')+1
+		</selectKey>
+			INSERT INTO board 
+				(
+					title
+					, writer 
+					, contents
+				)
+			VALUES
+				(
+					#{title}
+					, #{writer}
+					, #{contents}
+				)
+	</insert>
+	
+	<insert id="writeFile" parameterType="hashMap">
+		INSERT INTO file_board 
 			(
-				title
-				, writer 
-				, contents
+				bno
+				, org_fname
+				, save_fname
+				, fpath
 			)
 		VALUES
 			(
-				#{title}
-				, #{writer}
-				, #{contents}
+				#{bno}
+				, #{org_fname}
+				, #{save_fname}
+				, #{fpath}
 			)
 	</insert>
 	

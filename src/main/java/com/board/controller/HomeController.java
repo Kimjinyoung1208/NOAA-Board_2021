@@ -1,7 +1,5 @@
 package com.board.controller;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -13,11 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.ModelAndView;
 
+import com.board.dto.FileDto;
 import com.board.dto.HomeDto;
 import com.board.service.HomeService;
 
@@ -84,41 +80,9 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	public String postWrite(HomeDto homeDto) throws Exception {
-		MultipartFile uploadFile = homeDto.getUploadFile();
+	public String postWrite(FileDto fileDto, MultipartHttpServletRequest mreq) throws Exception {
+		homeService.write(fileDto, mreq);
 		
-		if ( uploadFile != null ) {
-			String fileName = uploadFile.getOriginalFilename();
-			homeDto.setFileName(fileName);
-			
-			try {
-				File file = new File("C:/fileUpload/" + fileName);
-				uploadFile.transferTo(file);
-			} catch (IOException e) {}
-		}
-		
-		homeService.write(homeDto);
-		
-		/*
-		 * String test = req.getParameter("test"); // text mapping
-		 * MultipartFile mf = req.getFile("file"); // file mapping String uploadPath =
-		 * "";
-		 * 
-		 * String path = "C:\\"+"fileUpload\\"; // file 업로드 경로
-		 * 
-		 * String original = mf.getOriginalFilename(); // 업로드하는 파일 name
-		 * 
-		 * System.out.println("*****"+test+"*****");
-		 * System.out.println("*****"+original+"*****");
-		 * System.out.println("*****"+mf.getSize()+"*****");
-		 * 
-		 * uploadPath = path+original;
-		 * 
-		 * try { mf.transferTo(new File(uploadPath)); // 파일을 위에 지정 경로로 업로드 } catch (
-		 * Exception e ) {}
-		 * 
-		 * homeService.write(homeDto);
-		 */
 		return "redirect:/";
 	}
 	

@@ -2,11 +2,13 @@ package com.board.dao;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.board.dto.FileDto;
 import com.board.dto.HomeDto;
 
 @Repository("HomeDao")
@@ -21,8 +23,12 @@ public class HomeDao {
 		  return sqlSession.selectList(namespace + ".list"); 
 	  }
 	  
-	  public void write(HomeDto homeDto) throws Exception {
-		  sqlSession.insert(namespace + ".write", homeDto);
+	  public void write(FileDto fileDto) throws Exception {
+		  sqlSession.insert(namespace + ".write", fileDto);
+	  }
+	  
+	  public void writeFile(Map<String, Object> map) throws Exception {
+		  sqlSession.insert(namespace + ".writeFile", map);
 	  }
 	  
 	  public HomeDto detail(int bno) throws Exception {
