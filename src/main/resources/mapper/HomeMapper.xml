@@ -51,16 +51,16 @@
 			)
 	</insert>
 	
-	<select id="detail" resultType="com.board.dto.HomeDto">
-		SELECT
-			bno
-			, title
-			, writer
-			, contents
-		FROM
-			board
+	<select id="detail" resultType="com.board.dto.FileDto">
+		SELECT * 
+		FROM 
+			board b 
+		LEFT JOIN 
+			file_board fb 
+		ON 
+			b.bno = fb.bno
 		WHERE
-			bno = #{bno}
+			b.bno = #{bno}
 	</select>
 	
 	<update id="update" parameterType="com.board.dto.HomeDto">

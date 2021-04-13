@@ -84,7 +84,7 @@ public class HomeService {
 		return UUID.randomUUID().toString().replaceAll("-", "");
 	}
 	
-	public HomeDto detail(int bno) throws Exception {
+	public FileDto detail(int bno) throws Exception {
 		return homeDao.detail(bno);
 	}
 	
@@ -102,6 +102,10 @@ public class HomeService {
 	
 	public List<HomeDto> paging(int postNum, int displayPost) throws Exception {
 		return homeDao.paging(postNum, displayPost);
+	}
+	
+	public FileDto fileDownload(int bno) throws Exception {
+		return homeDao.fileDownload(bno);
 	}
 	
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.board.dto.FileDto;
@@ -88,7 +89,7 @@ public class HomeController {
 	
 	@RequestMapping(value = "/detail", method = RequestMethod.GET)
 	public String getDetail(Model model, int bno) throws Exception {
-		HomeDto data = homeService.detail(bno);
+		FileDto data = homeService.detail(bno);
 		
 		try {
 			model.addAttribute("detail", data);
@@ -120,6 +121,16 @@ public class HomeController {
 		homeService.delete(bno);
 		
 		return "redirect:/";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/fileDownload", method = RequestMethod.POST)
+	public void postFileDownload(Model model, int bno) throws Exception {
+		FileDto data = homeService.fileDownload(bno);
+		
+		System.out.println(bno);
+		System.out.println(data.getSave_fname());
+		System.out.println(data.getFpath());
 	}
 
 }

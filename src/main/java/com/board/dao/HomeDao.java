@@ -31,7 +31,7 @@ public class HomeDao {
 		  sqlSession.insert(namespace + ".writeFile", map);
 	  }
 	  
-	  public HomeDto detail(int bno) throws Exception {
+	  public FileDto detail(int bno) throws Exception {
 		  return sqlSession.selectOne(namespace + ".detail", bno);
 	  }
 	  
@@ -54,6 +54,10 @@ public class HomeDao {
 		  data.put("displayPost", displayPost);
 		  
 		  return sqlSession.selectList(namespace + ".paging", data);
+	  }
+	  
+	  public FileDto fileDownload(int bno) throws Exception {
+		  return sqlSession.selectOne(namespace + ".detail", bno);
 	  }
 	  
 }

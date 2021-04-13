@@ -18,8 +18,31 @@
 		<label>제목: ${detail.title}</label>
 		<label>작성자: ${detail.writer}</label>
 		<label>내용: ${detail.contents}</label>
+		<label>파일 원본명: ${detail.org_fname}</label>
+		<button type="button" id="downloadBtn">다운로드</button>
+		<label>파일 저장명: ${detail.save_fname}</label>
+		<label>파일 경로: ${detail.fpath}</label>
 		<a href="/update?bno=${detail.bno}"><button>수정</button></a>
 		<a href="/delete?bno=${detail.bno}"><button>삭제</button></a>
+		
 	
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+	$(document).ready(function() {
+		$("#downloadBtn").click(function(){
+			console.log("click!!",${detail.bno});
+			$.ajax({
+	            url: '/fileDownload',
+	            method: 'POST',
+	            data:{
+	            	bno : ${detail.bno}
+	            },
+	            dataType: 'json',
+	            success: function(data) {}
+			});
+		});
+	});
+</script>
 </html>
