@@ -1,18 +1,24 @@
 package com.board.controller;
 
+import java.io.File;
+import java.net.URLEncoder;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.board.dto.FileDto;
 import com.board.dto.HomeDto;
@@ -125,12 +131,32 @@ public class HomeController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/fileDownload", method = RequestMethod.POST)
-	public void postFileDownload(Model model, int bno) throws Exception {
-		FileDto data = homeService.fileDownload(bno);
+	public void postFileDownload(int bno, HttpServletRequest req, HttpServletResponse res) throws Exception {
+		FileDto data = new FileDto();
+		data.setBno(bno);
+		data = homeService.fileDownload(data);
 		
 		System.out.println(bno);
 		System.out.println(data.getSave_fname());
 		System.out.println(data.getFpath());
+		
+		String org_fname = data.getOrg_fname();
+		String fpath = data.getFpath();
+		
+		/*
+		 * if ( data.getSave_fname().equals("image") ) {
+		 * 
+		 * 
+		 * res.setContentType(MediaType.MULTIPART_FORM_DATA); } else {
+		 * res.setContentType(MediaType.APPLICATION_OCTET_STREAM); }
+		 */
+		res.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode(org_fname,"UTF-8")+"\";");
+		res.setHeader("Content-Transfer-Encoding", "binary");
+		
+		byte[] fileByte = FileUtils.readFileToByteArray(new File(fpath));
+		res.getOutputStream().write(fileByte);
+		res.getOutputStream().flush();
+		res.getOutputStream().close();
 	}
 
 }

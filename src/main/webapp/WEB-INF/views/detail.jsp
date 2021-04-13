@@ -36,13 +36,20 @@
 			$.ajax({
 	            url: '/fileDownload',
 	            method: 'POST',
-	            data:{
+	            data: {
 	            	bno : ${detail.bno}
 	            },
-	            dataType: 'json',
-	            success: function(data) {}
+	            //dataType: 'json',
+	            success: function(data) {
+	            	console.log("success");
+	            },
+	            error: function(e) {
+	            	console.log(e)
+	            	alert("오류가 발생했습니다.");
+	            }
 			});
 		});
 	});
+	
 </script>
 </html>

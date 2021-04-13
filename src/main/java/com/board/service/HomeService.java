@@ -104,8 +104,8 @@ public class HomeService {
 		return homeDao.paging(postNum, displayPost);
 	}
 	
-	public FileDto fileDownload(int bno) throws Exception {
-		return homeDao.fileDownload(bno);
+	public FileDto fileDownload(FileDto data) throws Exception {
+		return homeDao.fileDownload(data);
 	}
 	
 }

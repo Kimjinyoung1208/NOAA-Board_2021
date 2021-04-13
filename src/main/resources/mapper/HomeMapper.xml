@@ -51,7 +51,7 @@
 			)
 	</insert>
 	
-	<select id="detail" resultType="com.board.dto.FileDto">
+	<select id="detail" resultType="com.board.dto.FileDto" parameterType="com.board.dto.FileDto">
 		SELECT * 
 		FROM 
 			board b 
@@ -63,7 +63,7 @@
 			b.bno = #{bno}
 	</select>
 	
-	<update id="update" parameterType="com.board.dto.HomeDto">
+	<update id="update" parameterType="com.board.dto.HomeDto" >
 		UPDATE 
 			board
 		SET
