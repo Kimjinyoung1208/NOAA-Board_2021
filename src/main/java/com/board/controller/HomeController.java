@@ -1,6 +1,8 @@
 package com.board.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.util.List;
 
@@ -137,12 +139,31 @@ public class HomeController {
 		data = homeService.fileDownload(data);
 		
 		System.out.println(bno);
-		System.out.println(data.getSave_fname());
+		System.out.println(data.getOrg_fname());
 		System.out.println(data.getFpath());
 		
+		String save_fname = data.getSave_fname();
 		String org_fname = data.getOrg_fname();
 		String fpath = data.getFpath();
 		
+		res.setHeader("Content-Disposition", "attachment; filename=\"" + org_fname + "\"");
+		res.setHeader("Content-Transfer-Encoding", "binary");
+		res.setHeader("Content-Type", "application/octet-stream");
+		res.setHeader("Pragma", "no-cache;");
+		res.setHeader("Expires", "-1;");
+
+		OutputStream os = res.getOutputStream();
+		FileInputStream fis = new FileInputStream(fpath);
+
+		int readCount = 0;
+		byte[] buffer = new byte[1024];
+
+		while((readCount = fis.read(buffer)) != -1) {
+			os.write(buffer, 0, readCount);
+		}
+		fis.close();
+		os.close();
+
 		/*
 		 * if ( data.getSave_fname().equals("image") ) {
 		 * 
@@ -150,13 +171,17 @@ public class HomeController {
 		 * res.setContentType(MediaType.MULTIPART_FORM_DATA); } else {
 		 * res.setContentType(MediaType.APPLICATION_OCTET_STREAM); }
 		 */
-		res.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode(org_fname,"UTF-8")+"\";");
-		res.setHeader("Content-Transfer-Encoding", "binary");
 		
-		byte[] fileByte = FileUtils.readFileToByteArray(new File(fpath));
-		res.getOutputStream().write(fileByte);
-		res.getOutputStream().flush();
-		res.getOutputStream().close();
+		/*
+		 * byte[] fileByte = FileUtils.readFileToByteArray(new File(fpath));
+		 * res.setContentType("application/octet-stream");
+		 * res.setContentLength(fileByte.length); res.setHeader("Content-Disposition",
+		 * "attachment; fileName=\"" + URLEncoder.encode(org_fname,"UTF-8")+"\";");
+		 * res.setHeader("Content-Transfer-Encoding", "binary");
+		 * res.getOutputStream().write(fileByte);
+		 * 
+		 * res.getOutputStream().flush(); res.getOutputStream().close();
+		 */
 	}
 
 }

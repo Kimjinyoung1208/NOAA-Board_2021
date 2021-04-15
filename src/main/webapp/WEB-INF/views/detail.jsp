@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <style>
-	label { display: block; margin-bottom: 10px; }
+	label, #downloadBtn { display: block; margin-bottom: 10px; }
 	a { text-decoration: none; color: black; }
 </style>
 <title>게시물 상세</title>
@@ -19,9 +19,9 @@
 		<label>작성자: ${detail.writer}</label>
 		<label>내용: ${detail.contents}</label>
 		<label>파일 원본명: ${detail.org_fname}</label>
-		<button type="button" id="downloadBtn">다운로드</button>
 		<label>파일 저장명: ${detail.save_fname}</label>
 		<label>파일 경로: ${detail.fpath}</label>
+		<button type="button" id="downloadBtn">다운로드</button>
 		<a href="/update?bno=${detail.bno}"><button>수정</button></a>
 		<a href="/delete?bno=${detail.bno}"><button>삭제</button></a>
 		
