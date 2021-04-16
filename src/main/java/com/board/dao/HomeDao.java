@@ -57,7 +57,7 @@ public class HomeDao {
 	  }
 	  
 	  public FileDto fileDownload(int bno) throws Exception {
-		  return sqlSession.selectOne(namespace + ".detail", bno);
+		  return sqlSession.selectOne(namespace + ".fileDownload", bno);
 	  }
 	  
 }

@@ -133,12 +133,10 @@ public class HomeController {
 		return "redirect:/";
 	}
 	
-	@ResponseBody
-	@RequestMapping(value = "/fileDownload", method = RequestMethod.POST)
-	public void postFileDownload(int bno, HttpServletRequest req, HttpServletResponse res) throws Exception {
+	@RequestMapping(value = "/fileDownload", method = RequestMethod.GET)
+	public String postFileDownload(HttpServletRequest req, HttpServletResponse res, int bno) throws Exception {
 		FileDto fileDto = homeService.fileDownload(bno);
 		
-		System.out.println(fileDto.getBno());
 		System.out.println(fileDto.getOrg_fname());
 		System.out.println(fileDto.getSave_fname());
 		System.out.println(fileDto.getFpath());
@@ -147,54 +145,25 @@ public class HomeController {
 		String org_fname = fileDto.getOrg_fname();
 		String fpath = fileDto.getFpath();
 		
-		File file = new File(fpath);
+		res.setHeader("Content-Disposition", "attachment; filename=\""+org_fname+"\"");
+		res.setHeader("Content-Transfer-Encoding", "binary");
+		res.setHeader("Content-Type", "application/octet-stream");
+		res.setHeader("Pragma", "no-cache;");
+		res.setHeader("Expires", "-1");
 		
-		FileInputStream fileInputStream = null;
-		ServletOutputStream servletOutputStream = null;
+		OutputStream os = res.getOutputStream();
+		FileInputStream fis = new FileInputStream(fpath);
 		
-		try {
-			String downName = null;
-			String browser = req.getHeader("User-Agent");
-			
-			if(browser.contains("MSIE") || browser.contains("Trident") || browser.contains("Chrome")) {
-				downName = URLEncoder.encode(org_fname, "UTF-8").replaceAll("\\+", "%20");
-			} else {
-				downName = new String(org_fname.getBytes("UTF-8"), "ISO-8859-1");
-			}
-			
-			res.setHeader("Content-Disposition", "attachment;filename=\""+downName+"\"");
-			res.setContentType("application/octer-stream");
-			res.setHeader("Content-Transfer-Encoding", "binary");
-			
-			fileInputStream = new FileInputStream(file);
-			servletOutputStream = res.getOutputStream();
-			
-			byte b[] = new byte[1024];
-			int data = 0;
-			
-			while((data = (fileInputStream.read(b, 0, b.length))) != -1) {
-				servletOutputStream.write(b, 0, data);
-			}
-			
-			servletOutputStream.flush();
-		} catch(Exception e) {
-			e.printStackTrace();
-		} finally {
-			if(servletOutputStream != null) {
-				try {
-					servletOutputStream.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			if (fileInputStream != null) {
-				try {
-	                fileInputStream.close();
-	            } catch (IOException e) {
-	                e.printStackTrace();
-	            }
-			}
+		int readCount = 0;
+		byte[] buffer = new byte[1024];
+		
+		while ((readCount = fis.read(buffer)) != -1) {
+			os.write(buffer, 0, readCount);
 		}
+		fis.close();
+		os.close();
+		
+		return "redirect:/";
 		
 	}
 

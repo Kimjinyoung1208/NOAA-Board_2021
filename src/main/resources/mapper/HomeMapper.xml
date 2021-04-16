@@ -51,7 +51,7 @@
 			)
 	</insert>
 	
-	<select id="detail" resultType="com.board.dto.FileDto" parameterType="int">
+	<select id="detail" parameterType="int" resultType="com.board.dto.FileDto">
 		SELECT * 
 		FROM 
 			board b 
@@ -93,6 +93,22 @@
 		FROM board
 		ORDER BY bno DESC
 		LIMIT #{postNum} OFFSET #{displayPost}
+	</select>
+	
+	<select id="fileDownload" parameterType="int" resultType="com.board.dto.FileDto">
+		SELECT
+			b.bno
+			, fb.org_fname
+			, fb.save_fname
+			, fb.fpath
+		FROM 
+			board b 
+		LEFT JOIN 
+			file_board fb 
+		ON 
+			b.bno = fb.bno
+		WHERE
+			b.bno = #{bno}
 	</select>
 
 </mapper> 
