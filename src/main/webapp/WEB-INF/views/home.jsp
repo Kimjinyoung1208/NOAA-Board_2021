@@ -7,6 +7,7 @@
 <%@ page import="java.sql.*" %>
 <html>
 <style>
+	div { margin: 10px 0; }
 	table, th, td { border: 1px solid black; text-align: center; }
 	form { margin-top: 10px; }
 </style>
@@ -15,6 +16,10 @@
 </head>
 <body>
 
+	<div>
+		<a href="/join"><button>회원가입</button></a>
+	</div>
+	
 	<table>
 		<thead>
 			<tr>
