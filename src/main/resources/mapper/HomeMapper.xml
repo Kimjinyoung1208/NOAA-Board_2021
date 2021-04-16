@@ -51,7 +51,7 @@
 			)
 	</insert>
 	
-	<select id="detail" resultType="com.board.dto.FileDto" parameterType="com.board.dto.FileDto">
+	<select id="detail" resultType="com.board.dto.FileDto" parameterType="int">
 		SELECT * 
 		FROM 
 			board b 

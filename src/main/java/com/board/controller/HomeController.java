@@ -2,11 +2,13 @@ package com.board.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -134,54 +136,66 @@ public class HomeController {
 	@ResponseBody
 	@RequestMapping(value = "/fileDownload", method = RequestMethod.POST)
 	public void postFileDownload(int bno, HttpServletRequest req, HttpServletResponse res) throws Exception {
-		FileDto data = new FileDto();
-		data.setBno(bno);
-		data = homeService.fileDownload(data);
+		FileDto fileDto = homeService.fileDownload(bno);
 		
-		System.out.println(bno);
-		System.out.println(data.getOrg_fname());
-		System.out.println(data.getFpath());
+		System.out.println(fileDto.getBno());
+		System.out.println(fileDto.getOrg_fname());
+		System.out.println(fileDto.getSave_fname());
+		System.out.println(fileDto.getFpath());
 		
-		String save_fname = data.getSave_fname();
-		String org_fname = data.getOrg_fname();
-		String fpath = data.getFpath();
+		String save_fname = fileDto.getSave_fname();
+		String org_fname = fileDto.getOrg_fname();
+		String fpath = fileDto.getFpath();
 		
-		res.setHeader("Content-Disposition", "attachment; filename=\"" + org_fname + "\"");
-		res.setHeader("Content-Transfer-Encoding", "binary");
-		res.setHeader("Content-Type", "application/octet-stream");
-		res.setHeader("Pragma", "no-cache;");
-		res.setHeader("Expires", "-1;");
-
-		OutputStream os = res.getOutputStream();
-		FileInputStream fis = new FileInputStream(fpath);
-
-		int readCount = 0;
-		byte[] buffer = new byte[1024];
-
-		while((readCount = fis.read(buffer)) != -1) {
-			os.write(buffer, 0, readCount);
+		File file = new File(fpath);
+		
+		FileInputStream fileInputStream = null;
+		ServletOutputStream servletOutputStream = null;
+		
+		try {
+			String downName = null;
+			String browser = req.getHeader("User-Agent");
+			
+			if(browser.contains("MSIE") || browser.contains("Trident") || browser.contains("Chrome")) {
+				downName = URLEncoder.encode(org_fname, "UTF-8").replaceAll("\\+", "%20");
+			} else {
+				downName = new String(org_fname.getBytes("UTF-8"), "ISO-8859-1");
+			}
+			
+			res.setHeader("Content-Disposition", "attachment;filename=\""+downName+"\"");
+			res.setContentType("application/octer-stream");
+			res.setHeader("Content-Transfer-Encoding", "binary");
+			
+			fileInputStream = new FileInputStream(file);
+			servletOutputStream = res.getOutputStream();
+			
+			byte b[] = new byte[1024];
+			int data = 0;
+			
+			while((data = (fileInputStream.read(b, 0, b.length))) != -1) {
+				servletOutputStream.write(b, 0, data);
+			}
+			
+			servletOutputStream.flush();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(servletOutputStream != null) {
+				try {
+					servletOutputStream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if (fileInputStream != null) {
+				try {
+	                fileInputStream.close();
+	            } catch (IOException e) {
+	                e.printStackTrace();
+	            }
+			}
 		}
-		fis.close();
-		os.close();
-
-		/*
-		 * if ( data.getSave_fname().equals("image") ) {
-		 * 
-		 * 
-		 * res.setContentType(MediaType.MULTIPART_FORM_DATA); } else {
-		 * res.setContentType(MediaType.APPLICATION_OCTET_STREAM); }
-		 */
 		
-		/*
-		 * byte[] fileByte = FileUtils.readFileToByteArray(new File(fpath));
-		 * res.setContentType("application/octet-stream");
-		 * res.setContentLength(fileByte.length); res.setHeader("Content-Disposition",
-		 * "attachment; fileName=\"" + URLEncoder.encode(org_fname,"UTF-8")+"\";");
-		 * res.setHeader("Content-Transfer-Encoding", "binary");
-		 * res.getOutputStream().write(fileByte);
-		 * 
-		 * res.getOutputStream().flush(); res.getOutputStream().close();
-		 */
 	}
 
 }

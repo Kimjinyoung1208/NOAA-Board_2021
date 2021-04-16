@@ -56,8 +56,8 @@ public class HomeDao {
 		  return sqlSession.selectList(namespace + ".paging", data);
 	  }
 	  
-	  public FileDto fileDownload(FileDto data) throws Exception {
-		  return sqlSession.selectOne(namespace + ".detail", data);
+	  public FileDto fileDownload(int bno) throws Exception {
+		  return sqlSession.selectOne(namespace + ".detail", bno);
 	  }
 	  
 }
