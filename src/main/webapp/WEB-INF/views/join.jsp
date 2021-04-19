@@ -55,6 +55,7 @@
 			success: function(data) {
 				console.log(data);
 				alert(data.resultText);
+				location.href = '/';
 			} ,
 			error: function(e) {
 				console.log(e);
