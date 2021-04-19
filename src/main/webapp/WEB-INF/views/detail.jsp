@@ -26,31 +26,4 @@
 		<a href="/delete?bno=${detail.bno}"><button>삭제</button></a>
 	
 </body>
-<!--
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-
-	$(document).ready(function() {
-		$("#downloadBtn").click(function(){
-			console.log("click!!",${detail.bno});
-			$.ajax({
-	            url: '/fileDownload',
-	            method: 'POST',
-	            data: {
-	            	bno : ${detail.bno}
-	            },
-	            //dataType: 'json',
-	            success: function(data) {
-	            	console.log("success");
-	            },
-	            error: function(e) {
-	            	console.log(e)
-	            	alert("오류가 발생했습니다.");
-	            }
-			});
-		});
-	});
-	
-</script>
--->
 </html>

@@ -11,12 +11,6 @@ public class MemberDto {
 	
 	private String resultText;
 	
-	public String getResultText() {
-		return resultText;
-	}
-	public void setResultText(String resultText) {
-		this.resultText = resultText;
-	}
 	public int getMno() {
 		return mno;
 	}
@@ -52,6 +46,12 @@ public class MemberDto {
 	}
 	public void setmEmail(String mEmail) {
 		this.mEmail = mEmail;
+	}
+	public String getResultText() {
+		return resultText;
+	}
+	public void setResultText(String resultText) {
+		this.resultText = resultText;
 	}
 
 }
