@@ -21,5 +21,18 @@
 				, #{mEmail}
 			)
 	</insert>
+	
+	<select id="idCheck" resultType="int">
+		SELECT count(*) 
+		FROM member_board
+		WHERE mId = #{mId}
+	</select>
+	
+	<select id="pwCheck" resultType="int">
+		SELECT count(*) 
+		FROM member_board
+		WHERE mId = #{mId}
+		AND mPw = #{mPw}
+	</select>
 
 </mapper> 

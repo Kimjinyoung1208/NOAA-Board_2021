@@ -18,6 +18,7 @@
 
 	<div>
 		<a href="/join"><button>회원가입</button></a>
+		<a href="/login"><button>로그인</button></a>
 	</div>
 	
 	<table>

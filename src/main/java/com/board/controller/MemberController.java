@@ -29,9 +29,24 @@ public class MemberController {
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
 	public MemberDto postJoin(@ModelAttribute MemberDto memberDto) throws Exception {
 		String resultTxt = "회원가입 실패";
-		
+		String idCheckResult = "아이디가 중복됩니다.";
+				
 		if(memberDto.getmPw().equals("")) memberDto.setmPw(null);
 		int result = memberService.join(memberDto);
+		int idResult = memberService.idCheck(memberDto);
+		
+		try {
+			if(idResult == 1) {
+				memberDto.setIdCheckResult(idCheckResult);
+				return memberDto;
+			} else if(idResult == 0) {
+				idCheckResult = null;
+				memberDto.setIdCheckResult(idCheckResult);
+				memberService.join(memberDto);
+			}
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
 		
 		if(result >= 0) {
 			resultTxt = "회원가입 성공";
@@ -40,6 +55,24 @@ public class MemberController {
 		memberDto.setResultText(resultTxt);
 		
 		return memberDto;
+	}
+	
+	@RequestMapping(value = "/idCheck", method = RequestMethod.POST)
+	public int idCheck(MemberDto memberDto) throws Exception {
+		int result = memberService.idCheck(memberDto);
+		return result;
+	}
+
+	@RequestMapping(value = "/pwCheck", method = RequestMethod.POST)
+	public int pwCheck(MemberDto memberDto) throws Exception {
+		int result = memberService.pwCheck(memberDto);
+		return result;
+	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String getLogin() throws Exception {
+		
+		return "login";
 	}
 
 }

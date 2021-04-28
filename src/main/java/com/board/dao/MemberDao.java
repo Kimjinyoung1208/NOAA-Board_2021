@@ -19,4 +19,14 @@ public class MemberDao {
 		return sqlSession.insert(namespace + ".join", memberDto);
 	}
 	
+	public int idCheck(MemberDto memberDto) throws Exception {
+		int result = sqlSession.selectOne(namespace + ".idCheck", memberDto);
+		return result;
+	}
+
+	public int pwCheck(MemberDto memberDto) throws Exception {
+		int result = sqlSession.selectOne(namespace + ".pwCheck", memberDto);
+		return result;
+	}
+	
 }

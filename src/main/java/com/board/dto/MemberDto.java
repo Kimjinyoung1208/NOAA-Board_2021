@@ -10,7 +10,15 @@ public class MemberDto {
 	private String mEmail;
 	
 	private String resultText;
+	private String idCheckResult;
 	
+	
+	public String getIdCheckResult() {
+		return idCheckResult;
+	}
+	public void setIdCheckResult(String idCheckResult) {
+		this.idCheckResult = idCheckResult;
+	}
 	public int getMno() {
 		return mno;
 	}

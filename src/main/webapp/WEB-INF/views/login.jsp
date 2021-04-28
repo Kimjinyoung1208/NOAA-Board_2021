@@ -12,7 +12,7 @@
 <style>
 	label { display: block; margin-bottom: 10px; }
 </style>
-<title>회원가입</title>
+<title>로그인</title>
 </head>
 <body>
 
@@ -22,16 +22,7 @@
 		<label>비밀번호: 
 			<input type="password" name="pw" id="pw" required />
 		</label>
-		<label>이름: 
-			<input type="text" name="name" id="name" required />
-		</label>
-		<label>휴대폰 번호: 
-			<input type="text" name="phone" id="phone" required />
-		</label>
-		<label>이메일: 
-			<input type="email" name="email" id="email" required />
-		</label>
-		<input type="button" value="작성" id="submit" />
+		<input type="button" value="로그인" id="submit" />
 
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -39,7 +30,7 @@
 
 	$("#submit").click(function() {
 		$.ajax({
-			url: '/join' ,
+			url: '/login' ,
 			//method: 'POST' ,
 			type: 'POST' ,
 			//dataType: 'json',
@@ -47,18 +38,11 @@
 			async: true ,
 			data: {
 				mId: $("#id").val() ,
-				mPw: $("#pw").val() ,
-				mName: $("#name").val() ,
-				mPhone: $("#phone").val() ,
-				mEmail: $("#email").val()
+				mPw: $("#pw").val()
 			} ,
 			success: function(data) {
 				console.log(data);
-				if(data.idCheckResult!=null){
-					alert(data.idCheckResult);
-				}else{
-					alert(data.resultText);
-				}
+				alert(data.resultText);
 				location.href = '/';
 			} ,
 			error: function(e) {
