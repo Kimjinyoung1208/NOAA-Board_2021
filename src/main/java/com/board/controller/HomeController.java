@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -18,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -106,6 +108,21 @@ public class HomeController {
 		} catch ( Exception e ) {}
 		
 		return "detail";
+	}
+	
+	@RequestMapping(value = "/detailList", method = RequestMethod.POST)
+	public FileDto postDetailList(@RequestBody int bno) throws Exception {
+		FileDto fileDto =  homeService.detail(bno);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("title", fileDto.getTitle());
+		map.put("writer", fileDto.getWriter());
+		map.put("contents", fileDto.getContents());
+		map.put("org_fname", fileDto.getOrg_fname());
+		map.put("save_fname", fileDto.getSave_fname());
+		map.put("fpath", fileDto.getFpath());
+		
+		return fileDto;
 	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.GET)

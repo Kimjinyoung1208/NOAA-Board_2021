@@ -2,12 +2,14 @@ package com.board.controller;
 
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.board.dto.MemberDto;
 import com.board.service.MemberService;
@@ -73,6 +75,19 @@ public class MemberController {
 	public String getLogin() throws Exception {
 		
 		return "login";
+	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public MemberDto postLogin(@ModelAttribute MemberDto memberDto, HttpSession session) throws Exception {
+		String result = "로그인 실패";
+		boolean resultData = memberService.loginCheck(memberDto, session);
+		if(resultData == true) {
+			memberDto.setLoginResult(result);
+			return memberDto;
+		} else {
+			memberDto.setLoginResult(result);
+		}
+		return memberDto;
 	}
 
 }

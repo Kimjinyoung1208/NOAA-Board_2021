@@ -12,7 +12,14 @@ public class MemberDto {
 	private String resultText;
 	private String idCheckResult;
 	
+	private String loginResult;
 	
+	public String getLoginResult() {
+		return loginResult;
+	}
+	public void setLoginResult(String loginResult) {
+		this.loginResult = loginResult;
+	}
 	public String getIdCheckResult() {
 		return idCheckResult;
 	}

@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.board.dto.MemberDto;
-import com.board.service.MemberService;
 
 @Repository("MemberDao")
 public class MemberDao {
@@ -27,6 +26,15 @@ public class MemberDao {
 	public int pwCheck(MemberDto memberDto) throws Exception {
 		int result = sqlSession.selectOne(namespace + ".pwCheck", memberDto);
 		return result;
+	}
+	
+	public boolean loginCheck(MemberDto memberDto) throws Exception {
+		String name = sqlSession.selectOne(namespace + ".loginCheck", memberDto);
+		return (name == null) ? false : true;
+	}
+	
+	public MemberDto viewMember(MemberDto memberDto) throws Exception {
+		return sqlSession.selectOne(namespace + ".viewMember", memberDto);
 	}
 	
 }

@@ -41,9 +41,7 @@
 				mPw: $("#pw").val()
 			} ,
 			success: function(data) {
-				console.log(data);
-				alert(data.resultText);
-				location.href = '/';
+				alertcon(data);
 			} ,
 			error: function(e) {
 				console.log(e);

@@ -34,5 +34,23 @@
 		WHERE mId = #{mId}
 		AND mPw = #{mPw}
 	</select>
+	
+	<select id="loginCheck" resultType="String">
+		SELECT
+			mName
+		FROM
+			member_board
+		WHERE
+			mId = #{mId} AND mPw = #{mPw}
+	</select>
+	
+	<select id="viewMember" resultType="com.board.dto.MemberDto">
+		SELECT
+			mName
+			, mId
+			, mEmail
+		FROM member_board
+		WHERE mId = #{mId} AND mPw = #{mPw}
+	</select>
 
 </mapper> 
