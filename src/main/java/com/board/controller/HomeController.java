@@ -15,8 +15,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -104,22 +107,21 @@ public class HomeController {
 		return "detail";
 	}
 	
-	@RequestMapping(value = "/detailList", method = RequestMethod.POST)
-	public FileDto detailList(HttpServletRequest req) throws Exception {
-		String bno = req.getParameter("bno");
-		FileDto fileDto = homeService.detailList(Integer.parseInt(bno));
-		System.out.println(fileDto);
+	@RequestMapping(value = "/detailList", method = RequestMethod.GET)
+	@ResponseBody
+	public FileDto detailList(@RequestParam(value="bno") String bno) throws Exception {
+		FileDto data = homeService.detailList(Integer.parseInt(bno));
 		
-		return fileDto;
+		return data;
 	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
 	public String getUpdate(Model model, HttpServletRequest req) throws Exception {
 		String bno = req.getParameter("bno");
-		FileDto fileDto = homeService.detailList(Integer.parseInt(bno));
+		FileDto data = homeService.detailList(Integer.parseInt(bno));
 		
 		try {
-			model.addAttribute("detail", fileDto);
+			model.addAttribute("detail", data);
 		} catch ( Exception e ) {}
 		
 		return "update";
@@ -141,15 +143,15 @@ public class HomeController {
 	
 	@RequestMapping(value = "/fileDownload", method = RequestMethod.GET)
 	public String postFileDownload(HttpServletRequest req, HttpServletResponse res, int bno) throws Exception {
-		FileDto fileDto = homeService.fileDownload(bno);
+		FileDto data = homeService.fileDownload(bno);
 		
-		System.out.println(fileDto.getOrg_fname());
-		System.out.println(fileDto.getSave_fname());
-		System.out.println(fileDto.getFpath());
+		System.out.println(data.getOrg_fname());
+		System.out.println(data.getSave_fname());
+		System.out.println(data.getFpath());
 		
-		String save_fname = fileDto.getSave_fname();
-		String org_fname = fileDto.getOrg_fname();
-		String fpath = fileDto.getFpath();
+		String save_fname = data.getSave_fname();
+		String org_fname = data.getOrg_fname();
+		String fpath = data.getFpath();
 		
 		res.setHeader("Content-Disposition", "attachment; filename=\""+org_fname+"\"");
 		res.setHeader("Content-Transfer-Encoding", "binary");

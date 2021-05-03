@@ -20,11 +20,13 @@ public class MemberService {
 	
 	public int idCheck(MemberDto memberDto) throws Exception {
 		int result = memberDao.idCheck(memberDto);
+		
 		return result;
 	}
 
 	public int pwCheck(MemberDto memberDto) throws Exception {
 		int result = memberDao.pwCheck(memberDto);
+		
 		return result;
 	}
 	
@@ -35,6 +37,7 @@ public class MemberService {
 			session.setAttribute("mId", memberDto2.getmId());
 			session.setAttribute("mName", memberDto2.getmName());
 		}
+		
 		return result;
 	}
 	

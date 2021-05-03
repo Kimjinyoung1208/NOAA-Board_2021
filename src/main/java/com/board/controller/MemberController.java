@@ -78,16 +78,18 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public MemberDto postLogin(@ModelAttribute MemberDto memberDto, HttpSession session) throws Exception {
-		String result = "로그인 실패";
-		boolean resultData = memberService.loginCheck(memberDto, session);
-		if(resultData == true) {
-			memberDto.setLoginResult(result);
-			return memberDto;
+	public ModelAndView postLogin(@ModelAttribute MemberDto memberDto, HttpSession session) throws Exception {
+		boolean result = memberService.loginCheck(memberDto, session);
+		ModelAndView mav = new ModelAndView();
+		if(result == true) {
+			mav.setViewName("home");
+			mav.addObject("msg", "success");
 		} else {
-			memberDto.setLoginResult(result);
+			mav.setViewName("login");
+			mav.addObject("msg", "failure");
 		}
-		return memberDto;
+		
+		return mav;
 	}
 
 }
