@@ -1,28 +1,22 @@
 package com.board.controller;
 
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.OutputStream;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -111,26 +105,21 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/detailList", method = RequestMethod.POST)
-	public FileDto postDetailList(@RequestBody int bno) throws Exception {
-		FileDto fileDto =  homeService.detail(bno);
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		
-		map.put("title", fileDto.getTitle());
-		map.put("writer", fileDto.getWriter());
-		map.put("contents", fileDto.getContents());
-		map.put("org_fname", fileDto.getOrg_fname());
-		map.put("save_fname", fileDto.getSave_fname());
-		map.put("fpath", fileDto.getFpath());
+	public FileDto detailList(HttpServletRequest req) throws Exception {
+		String bno = req.getParameter("bno");
+		FileDto fileDto = homeService.detailList(Integer.parseInt(bno));
+		System.out.println(fileDto);
 		
 		return fileDto;
 	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
-	public String getUpdate(Model model, int bno) throws Exception {
-		HomeDto data = homeService.detail(bno);
+	public String getUpdate(Model model, HttpServletRequest req) throws Exception {
+		String bno = req.getParameter("bno");
+		FileDto fileDto = homeService.detailList(Integer.parseInt(bno));
 		
 		try {
-			model.addAttribute("detail", data);
+			model.addAttribute("detail", fileDto);
 		} catch ( Exception e ) {}
 		
 		return "update";

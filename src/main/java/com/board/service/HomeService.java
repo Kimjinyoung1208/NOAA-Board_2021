@@ -88,6 +88,10 @@ public class HomeService {
 		return homeDao.detail(bno);
 	}
 	
+	public FileDto detailList(int bno) throws Exception {
+		return homeDao.detailList(bno);
+	}
+	
 	public void update(HomeDto homeDto) throws Exception {
 		homeDao.update(homeDto);
 	}

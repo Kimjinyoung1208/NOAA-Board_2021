@@ -35,6 +35,10 @@ public class HomeDao {
 		  return sqlSession.selectOne(namespace + ".detail", bno);
 	  }
 	  
+	  public FileDto detailList(int bno) throws Exception {
+		  return sqlSession.selectOne(namespace + ".detailList", bno);
+	  }
+	  
 	  public void update(HomeDto homeDto) throws Exception {
 		  sqlSession.update(namespace + ".update", homeDto);
 	  }

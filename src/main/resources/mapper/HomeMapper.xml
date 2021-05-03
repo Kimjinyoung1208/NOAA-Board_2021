@@ -52,7 +52,7 @@
 	</insert>
 	
 	<select id="detail" parameterType="int" resultType="com.board.dto.FileDto">
-		SELECT * 
+		SELECT b.bno
 		FROM 
 			board b 
 		LEFT JOIN 
@@ -61,6 +61,25 @@
 			b.bno = fb.bno
 		WHERE
 			b.bno = #{bno}
+	</select>
+	
+	<select id="detailList" parameterType="int" resultType="com.board.dto.FileDto">
+		SELECT 
+			fb.bno
+			, title
+			, contents
+			, writer
+			, org_fname
+			, save_fname
+			, fpath
+		FROM 
+			board b 
+		LEFT JOIN 
+			file_board fb 
+		ON 
+			fb.bno = b.bno
+		WHERE
+			fb.bno = #{bno}
 	</select>
 	
 	<update id="update" parameterType="com.board.dto.HomeDto" >
