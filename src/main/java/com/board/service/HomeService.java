@@ -58,9 +58,9 @@ public class HomeService {
 			file.mkdirs();
 		}
 		
-		while ( iterator.hasNext() ) {
+		while (iterator.hasNext()) {
 			multipartFile = mreq.getFile(iterator.next());
-			if ( multipartFile != null ) {
+			if (multipartFile.getSize() > 0)  {
 				originalFileName = multipartFile.getOriginalFilename();
 				originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
 				storedFileName = getRandomString() + originalFileExtension;
@@ -100,12 +100,12 @@ public class HomeService {
 		homeDao.delete(bno);
 	}
 	
-	public int count() throws Exception {
-		return homeDao.count();
+	public int count(String searchOption, String searchTxt) throws Exception {
+		return homeDao.count(searchOption, searchTxt);
 	}
 	
-	public List<HomeDto> paging(int postNum, int displayPost) throws Exception {
-		return homeDao.paging(postNum, displayPost);
+	public List<HomeDto> paging(int postNum, int displayPost, String sortOption, String searchOption, String search) throws Exception {
+		return homeDao.paging(postNum, displayPost, sortOption, searchOption, search);
 	}
 	
 	public FileDto fileDownload(int bno) throws Exception {

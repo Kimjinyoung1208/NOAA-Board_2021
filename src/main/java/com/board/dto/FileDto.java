@@ -10,7 +10,35 @@ public class FileDto {
 	private String title;
 	private String contents;
 	private String writer;
+	private boolean result;
+	private String sortOption;
+	private int num;
+	private String searchOption;
 	
+	public String getSearchOption() {
+		return searchOption;
+	}
+	public void setSearchOption(String searchOption) {
+		this.searchOption = searchOption;
+	}
+	public int getNum() {
+		return num;
+	}
+	public void setNum(int num) {
+		this.num = num;
+	}
+	public boolean isResult() {
+		return result;
+	}
+	public String getSortOption() {
+		return sortOption;
+	}
+	public void setSortOption(String sortOption) {
+		this.sortOption = sortOption;
+	}
+	public void setResult(boolean result) {
+		this.result = result;
+	}
 	public String getTitle() {
 		return title;
 	}

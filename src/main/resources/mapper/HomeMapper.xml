@@ -99,8 +99,14 @@
 		DELETE FROM board WHERE bno = #{bno}
 	</delete>
 	
-	<select id="count" resultType="int">
-		SELECT count(bno) FROM board;
+	<select id="count" parameterType="hashMap" resultType="int">
+		SELECT count(bno) FROM board
+		<if test="searchOption.equals('')">
+			WHERE title LIKE '%' || '${search}' || '%'
+		</if>
+		<if test="searchOption.equals('writer')">
+			WHERE writer LIKE '%' || '${search}' || '%'
+		</if>
 	</select>
 	
 	<select id="paging" parameterType="hashMap" resultType="com.board.dto.HomeDto">
@@ -112,7 +118,18 @@
 			, viewcnt
 			, to_char(regdate, 'YYYY-MM-DD HH24:MI') AS regdate
 		FROM board
-		ORDER BY bno DESC
+		<if test="searchOption.equals('')">
+			WHERE title LIKE '%' || '${search}' || '%'
+		</if>
+		<if test='searchOption.equals("writer")'>
+			WHERE writer LIKE '%' || '${search}' || '%'
+		</if>
+		<if test="sortOption.equals('')">
+			ORDER BY bno DESC
+		</if>
+		<if test="sortOption.equals('view')">
+			ORDER BY viewcnt DESC, bno DESC
+		</if>
 		LIMIT #{postNum} OFFSET #{displayPost}
 	</select>
 	

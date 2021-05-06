@@ -22,9 +22,9 @@
 <%-- 	<label>파일 원본명: ${detail.org_fname}</label> --%>
 <%-- 	<label>파일 저장명: ${detail.save_fname}</label> --%>
 <%-- 	<label>파일 경로: ${detail.fpath}</label> --%>
-	<a href="/fileDownload?bno=${detail.bno}"><button type="button" id="downloadBtn">다운로드</button></a>
-	<a href="/update?bno=${detail.bno}"><button>수정</button></a>
-	<a href="/delete?bno=${detail.bno}"><button>삭제</button></a>
+	<a href="/fileDownload?bno=${detail.bno}"><button id="downloadBtn">다운로드</button></a>
+	<button id="updateBtn">수정</button>
+	<button id="deleteBtn">삭제</button>
 	<a href="/?num=1"><button>목록</button></a>
 
 </body>
@@ -43,6 +43,8 @@
 				bno: ${detail.bno}
 			},
 			success: function(data) {
+				console.log(data);
+				
 				$('#detailList').append(
 						'<label>제목 : ' + data.title + '</label>' 
 						+ '<label>작성자 : ' + data.writer + '</label>' 
@@ -50,6 +52,11 @@
 						+ '<label>파일 원본명 : ' + data.org_fname + '</label>' 
 						+ '<label>파일 저장명 : ' + data.save_fname + '</label>' 
 						+ '<label>파일 경로 : ' + data.fpath + '</label>');
+				
+				if (!data.result) {
+					$("#updateBtn").hide();
+					$("#deleteBtn").hide();
+				}
 			},
 			error: function(e) {
 				console.log(e);
@@ -64,12 +71,20 @@
 			data: {
 				bno: ${detail.bno}
 			},
-			success: function(data){
+			success: function(data) {
 			},
 			error: function(e) {
 				console.log(e);
 				alert("조회수 실패");
 			}
+		});
+		
+		$("#updateBtn").click(function() {
+			location.href="/update?bno=${detail.bno}";
+		});
+		
+		$("#deleteBtn").click(function() {
+			location.href="/delete?bno=${detail.bno}";
 		});
 	});
 	

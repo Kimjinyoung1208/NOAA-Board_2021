@@ -47,15 +47,23 @@ public class HomeDao {
 		  sqlSession.delete(namespace + ".delete", bno);
 	  }
 	  
-	  public int count() throws Exception {
-		  return sqlSession.selectOne(namespace + ".count");
+	  public int count(String searchOption, String searchTxt) throws Exception {
+		  HashMap<String, Object> data = new HashMap<String, Object>();
+		  
+		  data.put("searchOption", searchOption);
+		  data.put("search", searchTxt);
+		  
+		  return sqlSession.selectOne(namespace + ".count", data);
 	  }
 	  
-	  public List<HomeDto> paging(int postNum, int displayPost) throws Exception {
-		  HashMap<String, Integer> data = new HashMap<String, Integer>();
+	  public List<HomeDto> paging(int postNum, int displayPost, String sortOption, String searchOption, String search) throws Exception {
+		  HashMap<String, Object> data = new HashMap<String, Object>();
 		  
 		  data.put("postNum", postNum);
 		  data.put("displayPost", displayPost);
+		  data.put("sortOption", sortOption);
+		  data.put("searchOption", searchOption);
+		  data.put("search", search);
 		  
 		  return sqlSession.selectList(namespace + ".paging", data);
 	  }

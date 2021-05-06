@@ -10,6 +10,7 @@
 	div { margin: 10px 0; }
 	table, th, td { border: 1px solid black; text-align: center; }
 	form { margin-top: 10px; }
+	select { margin-bottom: 10px; }
 </style>
 <head>
 	<title>게시판 홈</title>
@@ -24,6 +25,20 @@
 	</c:if>
 	<div>
 	
+	</div>
+	
+	<select id="orderBy">
+		<option value="">최신순</option>
+		<option value="view">조회순</option>
+	</select>
+	
+	<div>
+		<select id="searchBy">
+			<option value="">제목</option>
+			<option value="writer">작성자</option>
+		</select>
+		<input type="text" id="searchBox" name="searchBox" />
+		<button id="search">검색</button>
 	</div>
 	
 	<table>
@@ -53,16 +68,16 @@
 	
 	<div>
 		<c:if test="${prev}">
-			<span>[ <a href="/?num=1">처음</a> ]</span>
+			<span>[ <a href="/?num=1&sortOption=${sortOption}&search=${search}&searchOption=${searchOption}">처음</a> ]</span>
 		</c:if>
 		<c:if test="${prev}">
-			<span>[ <a href="/?num=${startPageNum - 1}">이전</a> ]</span>
+			<span>[ <a href="/?num=${startPageNum - 1}&sortOption=${sortOption}&search=${search}&searchOption=${searchOption}">이전</a> ]</span>
 		</c:if>
 		
 		<c:forEach begin="${startPageNum}" end="${endPageNum}" var="num">
 			<span>
 				<c:if test="${select != num}">
-					<a href="/?num=${num}">${num}</a>
+					<a href="/?num=${num}&sortOption=${sortOption}&search=${search}&searchOption=${searchOption}">${num}</a>
 				</c:if>
 				<c:if test="${select == num}">
 					<b>${num}</b>
@@ -71,10 +86,10 @@
 		</c:forEach>
 		
 		<c:if test="${next}">
-			<span>[ <a href="/?num=${endPageNum + 1}">다음</a> ]</span>
+			<span>[ <a href="/?num=${endPageNum + 1}&sortOption=${sortOption}&search=${search}&searchOption=${searchOption}">다음</a> ]</span>
 		</c:if>
 		<c:if test="${next}">
-			<span>[ <a href="/?num=${pageNum}">끝</a> ]</span>
+			<span>[ <a href="/?num=${pageNum}&sortOption=${sortOption}&search=${search}&searchOption=${searchOption}">끝</a> ]</span>
 		</c:if>
 	</div>
 	
@@ -85,6 +100,12 @@
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
+
+	$(document).ready(function(){
+		$("#orderBy").val('${sortOption}');
+		$("#searchBy").val('${searchOption}');
+		$("#searchBox").val('${search}');
+	});
 
 	$("#logoutBtn").click(function() {
 		$.ajax({
@@ -100,6 +121,16 @@
 				alert("오류가 발생했습니다.");
 			}
 		});
+	});
+	
+	$("#orderBy").change(function() {
+		var num = 1;
+		location.href = "/?num=" + num + "&sortOption=" +  $("#orderBy").val();
+	});
+
+	$("#search").click(function() {
+		var num = 1;
+		location.href = "/?num=" + num + "&sortOption=" +  $("#orderBy").val() + "&search=" + $("#searchBox").val() +"&searchOption=" + $("#searchBy").val();
 	});
 	
 </script>

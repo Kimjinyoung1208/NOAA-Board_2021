@@ -40,9 +40,24 @@ public class HomeController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String getPaging(Model model, HttpServletRequest req) throws Exception {
+		String sortOption = "";
+		if(req.getParameter("sortOption") != null) {
+			sortOption = req.getParameter("sortOption");
+		}
+		
+		String searchOption = "";
+		if(req.getParameter("searchOption") != null) {
+			searchOption = req.getParameter("searchOption");
+		}
+		String searchTxt = "";
+		if(req.getParameter("search") != null) {
+			searchTxt = req.getParameter("search");
+		}
+		System.out.println(searchTxt);
+		
 		int num = ( req.getParameter("num") != null ) ? Integer.parseInt(req.getParameter("num")) : 1;
 		// 게시물 갯수
-		int count = homeService.count();
+		int count = homeService.count(searchOption, searchTxt);
 		// 한 페이지 당 게시물 갯수
 		int postNum = 10;
 		// 페이지 갯수
@@ -66,10 +81,10 @@ public class HomeController {
 		boolean next = endPageNum * pageNum_cnt >= count ? false : true;
 		
 		List<HomeDto> list = null;
-		list = homeService.paging(postNum, displayPost);
+		list = homeService.paging(postNum, displayPost, sortOption, searchOption, searchTxt);
 		
 		HttpSession httpSession = req.getSession(true);
-		MemberDto memberDto = (MemberDto) httpSession.getAttribute("member");
+		MemberDto memberDto = (MemberDto)httpSession.getAttribute("member");
 		
 		boolean result = false;
 		
@@ -82,6 +97,11 @@ public class HomeController {
 		}
 		
 		try {
+			
+			model.addAttribute("sortOption",sortOption);
+			model.addAttribute("searchOption",searchOption);
+			model.addAttribute("search",searchTxt);
+			
 			model.addAttribute("list", list);
 			model.addAttribute("pageNum", pageNum);
 			
@@ -109,7 +129,11 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	public String postWrite(FileDto fileDto, MultipartHttpServletRequest mreq) throws Exception {
+	public String postWrite(FileDto fileDto, MultipartHttpServletRequest mreq, HttpServletRequest req) throws Exception {
+		HttpSession httpSession = req.getSession(true);
+		MemberDto memberDto = (MemberDto)httpSession.getAttribute("member");
+		fileDto.setWriter(memberDto.getmId());
+		
 		homeService.write(fileDto, mreq);
 		
 		return "redirect:/";
@@ -128,15 +152,27 @@ public class HomeController {
 	
 	@RequestMapping(value = "/detailList", method = RequestMethod.GET)
 	@ResponseBody
-	public FileDto detailList(@RequestParam(value="bno") String bno) throws Exception {
+	public FileDto detailList(@RequestParam(value="bno") String bno, HttpServletRequest req) throws Exception {
+		HttpSession httpSession = req.getSession(true);
+		MemberDto memberDto = (MemberDto)httpSession.getAttribute("member");
+		
 		FileDto data = homeService.detailList(Integer.parseInt(bno));
+		
+		boolean resultBool = false;
+		
+		if(memberDto == null) {
+			data.setResult(resultBool);
+			return data;
+		} else if (memberDto.getmId().equals(data.getWriter())) {
+			resultBool = true;
+			data.setResult(resultBool);
+		}
 		
 		return data;
 	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
-	public String getUpdate(Model model, HttpServletRequest req) throws Exception {
-		String bno = req.getParameter("bno");
+	public String getUpdate(@RequestParam(value = "bno") String bno, Model model) throws Exception {
 		FileDto data = homeService.detailList(Integer.parseInt(bno));
 		
 		try {
@@ -208,6 +244,7 @@ public class HomeController {
 					break;
 				} else {
 					Cookie cookie = new Cookie("bno" + bno, _bno);
+					System.out.println(cookie);
 					cookie.setMaxAge(60*60*24);
 					res.addCookie(cookie);
 					
@@ -219,6 +256,5 @@ public class HomeController {
 		if (viewCnt > 0) {
 			homeService.viewCount(bno);			
 		}
-	}
-
+	} 
 }

@@ -14,9 +14,6 @@
 		<label>제목: 
 			<input type="text" name="title" required />
 		</label>
-		<label>작성자: 
-			<input type="text" name="writer" required />
-		</label>
 		<label>내용: 
 			<textarea name="contents" placeholder="내용 작성" required></textarea>
 		</label>
