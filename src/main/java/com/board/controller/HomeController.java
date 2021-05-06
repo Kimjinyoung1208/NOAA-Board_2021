@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -190,7 +191,34 @@ public class HomeController {
 		os.close();
 		
 		return "redirect:/";
+	}
+	
+	@RequestMapping(value = "/viewCount", method = RequestMethod.GET)
+	@ResponseBody
+	public void viewCount(@RequestParam(value="bno") String _bno, HttpServletRequest req, HttpServletResponse res) throws Exception {
+		int bno = Integer.parseInt(_bno);
+		int viewCnt = 0;
 		
+		Cookie[] cookies = req.getCookies();
+		
+		if (cookies != null) {
+			for (int i=0; i < cookies.length; i++) {
+				if (cookies[i].getName().equals("bno" + bno)) {
+					viewCnt = 0;
+					break;
+				} else {
+					Cookie cookie = new Cookie("bno" + bno, _bno);
+					cookie.setMaxAge(60*60*24);
+					res.addCookie(cookie);
+					
+					viewCnt += 1;
+				}
+			} 
+		}
+		
+		if (viewCnt > 0) {
+			homeService.viewCount(bno);			
+		}
 	}
 
 }

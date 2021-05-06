@@ -64,4 +64,8 @@ public class HomeDao {
 		  return sqlSession.selectOne(namespace + ".fileDownload", bno);
 	  }
 	  
+	  public void viewCount(int bno) throws Exception {
+		  sqlSession.update(namespace + ".viewCount", bno);
+	  }
+	  
 }

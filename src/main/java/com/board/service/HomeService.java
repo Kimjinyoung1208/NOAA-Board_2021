@@ -112,4 +112,8 @@ public class HomeService {
 		return homeDao.fileDownload(bno);
 	}
 	
+	public void viewCount(int bno) throws Exception {
+		homeDao.viewCount(bno);
+	}
+	
 }

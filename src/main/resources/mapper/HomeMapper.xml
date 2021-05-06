@@ -131,5 +131,9 @@
 		WHERE
 			b.bno = #{bno}
 	</select>
+	
+	<update id="viewCount" parameterType="int">
+		UPDATE board SET viewcnt = viewcnt + 1 WHERE bno = #{bno}
+	</update>
 
 </mapper> 

@@ -25,6 +25,7 @@
 	<a href="/fileDownload?bno=${detail.bno}"><button type="button" id="downloadBtn">다운로드</button></a>
 	<a href="/update?bno=${detail.bno}"><button>수정</button></a>
 	<a href="/delete?bno=${detail.bno}"><button>삭제</button></a>
+	<a href="/?num=1"><button>목록</button></a>
 
 </body>
 
@@ -42,9 +43,6 @@
 				bno: ${detail.bno}
 			},
 			success: function(data) {
-				console.log(data);
-				data.org_fname != null ? data.org_fname : '';
-				
 				$('#detailList').append(
 						'<label>제목 : ' + data.title + '</label>' 
 						+ '<label>작성자 : ' + data.writer + '</label>' 
@@ -55,7 +53,22 @@
 			},
 			error: function(e) {
 				console.log(e);
-				alert("실패");
+				alert("불러오기 실패");
+			}
+		});
+		
+		$.ajax({
+			url: '/viewCount',
+			type: 'GET',
+			async: true,
+			data: {
+				bno: ${detail.bno}
+			},
+			success: function(data){
+			},
+			error: function(e) {
+				console.log(e);
+				alert("조회수 실패");
 			}
 		});
 	});
