@@ -42,7 +42,16 @@
 				bno: ${detail.bno}
 			},
 			success: function(data) {
-				$('#detailList').append('<label>제목 : ' + data.title + '</label>' + '<label>작성자 : ' + data.writer + '</label>' + '<label>내용 : ' + data.contents + '</label>' + '<label>파일 원본명 : ' + data.org_fname + '</label>' + '<label>파일 저장명 : ' + data.save_fname + '</label>' + '<label>파일 경로 : ' + data.fpath + '</label>');
+				console.log(data);
+				data.org_fname != null ? data.org_fname : '';
+				
+				$('#detailList').append(
+						'<label>제목 : ' + data.title + '</label>' 
+						+ '<label>작성자 : ' + data.writer + '</label>' 
+						+ '<label>내용 : ' + data.contents + '</label>' 
+						+ '<label>파일 원본명 : ' + data.org_fname + '</label>' 
+						+ '<label>파일 저장명 : ' + data.save_fname + '</label>' 
+						+ '<label>파일 경로 : ' + data.fpath + '</label>');
 			},
 			error: function(e) {
 				console.log(e);

@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.board.dto.FileDto;
 import com.board.dto.HomeDto;
+import com.board.dto.MemberDto;
 import com.board.service.HomeService;
 
 @Controller
@@ -36,8 +38,8 @@ public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String getPaging(Model model, HttpServletRequest request) throws Exception {
-		int num = ( request.getParameter("num") != null ) ? Integer.parseInt(request.getParameter("num")) : 1;
+	public String getPaging(Model model, HttpServletRequest req) throws Exception {
+		int num = ( req.getParameter("num") != null ) ? Integer.parseInt(req.getParameter("num")) : 1;
 		// 게시물 갯수
 		int count = homeService.count();
 		// 한 페이지 당 게시물 갯수
@@ -65,6 +67,19 @@ public class HomeController {
 		List<HomeDto> list = null;
 		list = homeService.paging(postNum, displayPost);
 		
+		HttpSession httpSession = req.getSession(true);
+		MemberDto memberDto = (MemberDto) httpSession.getAttribute("member");
+		
+		boolean result = false;
+		
+		if(memberDto != null) {
+			System.out.println(memberDto.getmId());
+			System.out.println(memberDto.getmName());
+			memberDto.getmId();
+			memberDto.getmName();
+			result = true;
+		}
+		
 		try {
 			model.addAttribute("list", list);
 			model.addAttribute("pageNum", pageNum);
@@ -79,6 +94,9 @@ public class HomeController {
 			
 			// 현재 페이지
 			model.addAttribute("select", num);
+
+			// 로그인 체크
+			model.addAttribute("result", result);
 		} catch ( Exception e ) {}
 		
 		return "home";

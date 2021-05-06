@@ -1,7 +1,13 @@
 package com.board.controller;
 
 
+import java.util.Date;
+import java.util.HashMap;
+
 import javax.inject.Inject;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -10,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.WebUtils;
 
 import com.board.dto.MemberDto;
 import com.board.service.MemberService;
@@ -77,19 +85,30 @@ public class MemberController {
 		return "login";
 	}
 	
+	@ResponseBody
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ModelAndView postLogin(@ModelAttribute MemberDto memberDto, HttpSession session) throws Exception {
-		boolean result = memberService.loginCheck(memberDto, session);
-		ModelAndView mav = new ModelAndView();
-		if(result == true) {
-			mav.setViewName("home");
-			mav.addObject("msg", "success");
-		} else {
-			mav.setViewName("login");
-			mav.addObject("msg", "failure");
-		}
+	public HashMap<String, Object> postLogin(@ModelAttribute MemberDto memberDto, HttpServletRequest req) throws Exception {
+		HttpSession session = req.getSession();
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		MemberDto login = memberService.login(memberDto);
 		
-		return mav;
+		boolean resultBool = false;
+		
+		if(login == null) {
+			session.setAttribute("member", null);
+		} else {
+			session.setAttribute("member", login);
+			resultBool = true;
+			
+		}
+		resultMap.put("result",resultBool);
+		
+		return resultMap;
+	}
+	
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public void postLogout(HttpServletRequest req, HttpServletResponse res, HttpSession session) throws Exception {
+		memberService.logout(session);
 	}
 
 }

@@ -15,10 +15,15 @@
 	<title>게시판 홈</title>
 </head>
 <body>
-
-	<div>
+	<c:if test="${result eq 'false'}">
 		<a href="/join"><button>회원가입</button></a>
 		<a href="/login"><button>로그인</button></a>
+	</c:if>
+	<c:if test="${result eq 'true'}">
+		<a href="/logout"><button id="logoutBtn">로그아웃</button></a>
+	</c:if>
+	<div>
+	
 	</div>
 	
 	<table>
@@ -71,12 +76,6 @@
 		<c:if test="${next}">
 			<span>[ <a href="/?num=${pageNum}">끝</a> ]</span>
 		</c:if>
-	
-<%-- 		 <c:forEach begin="1" end="${pageNum}" var="num"> --%>
-<!-- 			<span> -->
-<%-- 				<a href="/?num=${num}">${num}</a> --%>
-<!-- 			</span> -->
-<%-- 		 </c:forEach> --%>
 	</div>
 	
 	<form method="get">
@@ -84,4 +83,24 @@
 	</form>
 
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+	$("#logoutBtn").click(function() {
+		$.ajax({
+			url : '/logout',
+			type : 'GET',
+			async : true,
+			success : function(data) {
+				alert('로그아웃 성공');
+				location.href="";
+			},
+			error : function(e) {
+				console.log(e);
+				alert("오류가 발생했습니다.");
+			}
+		});
+	});
+	
+</script>
 </html>

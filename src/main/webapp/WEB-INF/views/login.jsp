@@ -15,33 +15,35 @@
 <title>로그인</title>
 </head>
 <body>
-
-		<label>아이디: 
-			<input type="text" name="id" id="id" required />
-		</label>
-		<label>비밀번호: 
-			<input type="password" name="pw" id="pw" required />
-		</label>
-		<input type="button" value="로그인" id="submit" />
+	
+	<label>아이디: 
+		<input type="text" name="id" id="id" required />
+	</label>
+	<label>비밀번호: 
+		<input type="password" name="pw" id="pw" required />
+	</label>
+	<input type="button" value="로그인" id="loginBtn" />
 
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
 
-	$("#submit").click(function() {
+	$("#loginBtn").click(function() {
 		$.ajax({
 			url: '/login' ,
-			//method: 'POST' ,
 			type: 'POST' ,
-			//dataType: 'json',
-			//contentType: "application/json",
 			async: true ,
 			data: {
 				mId: $("#id").val() ,
 				mPw: $("#pw").val()
 			} ,
 			success: function(data) {
-				alertcon(data);
+				console.log(data);
+				if(data.result) {
+					location.href = "/";
+				}else {
+					alert(" 로그인 실패 !")
+				}
 			} ,
 			error: function(e) {
 				console.log(e);

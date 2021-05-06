@@ -1,5 +1,8 @@
 package com.board.service;
 
+import java.io.PrintWriter;
+
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,19 +33,16 @@ public class MemberService {
 		return result;
 	}
 	
-	public boolean loginCheck(MemberDto memberDto, HttpSession session) throws Exception {
-		boolean result = memberDao.loginCheck(memberDto);
-		if(result) {
-			MemberDto memberDto2 = viewMember(memberDto);
-			session.setAttribute("mId", memberDto2.getmId());
-			session.setAttribute("mName", memberDto2.getmName());
-		}
-		
-		return result;
+	public MemberDto login(MemberDto memberDto) throws Exception {
+		return memberDao.login(memberDto);
 	}
 	
 	public MemberDto viewMember(MemberDto memberDto) throws Exception {
 		return memberDao.viewMember(memberDto);
+	}
+	
+	public void logout(HttpSession session) {
+		session.invalidate();
 	}
 
 }

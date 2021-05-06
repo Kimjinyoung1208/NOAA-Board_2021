@@ -35,9 +35,10 @@
 		AND mPw = #{mPw}
 	</select>
 	
-	<select id="loginCheck" resultType="String">
+	<select id="login" resultType="com.board.dto.MemberDto">
 		SELECT
 			mName
+			, mId
 		FROM
 			member_board
 		WHERE

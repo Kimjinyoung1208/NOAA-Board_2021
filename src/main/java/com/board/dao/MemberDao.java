@@ -1,5 +1,7 @@
 package com.board.dao;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -28,13 +30,16 @@ public class MemberDao {
 		return result;
 	}
 	
-	public boolean loginCheck(MemberDto memberDto) throws Exception {
-		String name = sqlSession.selectOne(namespace + ".loginCheck", memberDto);
-		return (name == null) ? false : true;
+	public MemberDto login(MemberDto memberDto) throws Exception {
+		return sqlSession.selectOne(namespace + ".login", memberDto);
 	}
 	
 	public MemberDto viewMember(MemberDto memberDto) throws Exception {
 		return sqlSession.selectOne(namespace + ".viewMember", memberDto);
+	}
+	
+	public void logout(HttpSession session) {
+		
 	}
 	
 }
