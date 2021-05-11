@@ -63,29 +63,29 @@
 				alert("불러오기 실패");
 			}
 		});
+	});
 		
-		$.ajax({
-			url: '/viewCount',
-			type: 'GET',
-			async: true,
-			data: {
-				bno: ${detail.bno}
-			},
-			success: function(data) {
-			},
-			error: function(e) {
-				console.log(e);
-				alert("조회수 실패");
-			}
-		});
-		
-		$("#updateBtn").click(function() {
-			location.href="/update?bno=${detail.bno}";
-		});
-		
-		$("#deleteBtn").click(function() {
-			location.href="/delete?bno=${detail.bno}";
-		});
+	$.ajax({
+		url: '/viewCount',
+		type: 'GET',
+		async: true,
+		data: {
+			bno: ${detail.bno}
+		},
+		success: function(data) {
+		},
+		error: function(e) {
+			console.log(e);
+			alert("조회수 실패");
+		}
+	});
+	
+	$("#updateBtn").click(function() {
+		location.href="/update?bno=${detail.bno}";
+	});
+	
+	$("#deleteBtn").click(function() {
+		location.href="/delete?bno=${detail.bno}";
 	});
 	
 </script>
