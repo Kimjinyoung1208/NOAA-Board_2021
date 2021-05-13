@@ -34,7 +34,7 @@
 
 	$(document).ready(function() {
 		$.ajax({
-			url: '/detailList',
+			url: '/detailContent',
 			type: 'GET',
 			async: true,
 			dataType: 'json',

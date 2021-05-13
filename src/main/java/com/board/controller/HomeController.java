@@ -145,18 +145,18 @@ public class HomeController {
 		
 		try {
 			model.addAttribute("detail", data);
-		} catch ( Exception e ) {}
-		
+		} catch (Exception e) {}
+
 		return "detail";
 	}
 	
-	@RequestMapping(value = "/detailList", method = RequestMethod.GET)
+	@RequestMapping(value = "/detailContent", method = RequestMethod.GET)
 	@ResponseBody
-	public FileDto detailList(@RequestParam(value="bno") String bno, HttpServletRequest req) throws Exception {
+	public FileDto getDetailContent(@RequestParam(value="bno") String bno, HttpServletRequest req) throws Exception {
 		HttpSession httpSession = req.getSession(true);
 		MemberDto memberDto = (MemberDto)httpSession.getAttribute("member");
 		
-		FileDto data = homeService.detailList(Integer.parseInt(bno));
+		FileDto data = homeService.detail(Integer.parseInt(bno));
 		
 		boolean resultBool = false;
 		
@@ -173,7 +173,7 @@ public class HomeController {
 	
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
 	public String getUpdate(@RequestParam(value = "bno") String bno, Model model) throws Exception {
-		FileDto data = homeService.detailList(Integer.parseInt(bno));
+		FileDto data = homeService.detail(Integer.parseInt(bno));
 		
 		try {
 			model.addAttribute("detail", data);

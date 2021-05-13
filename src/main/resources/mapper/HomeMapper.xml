@@ -52,18 +52,6 @@
 	</insert>
 	
 	<select id="detail" parameterType="int" resultType="com.board.dto.FileDto">
-		SELECT b.bno
-		FROM 
-			board b 
-		LEFT JOIN 
-			file_board fb 
-		ON 
-			b.bno = fb.bno
-		WHERE
-			b.bno = #{bno}
-	</select>
-	
-	<select id="detailList" parameterType="int" resultType="com.board.dto.FileDto">
 		<![CDATA[
 			SELECT 
 				b.bno
