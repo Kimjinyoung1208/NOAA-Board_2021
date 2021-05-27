@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.board.mapper.Reply">
+
+	<select id="replyList" parameterType="int" resultType="com.board.dto.HomeDto">
+		SELECT	
+			rb.rno
+			, b.bno
+			, rb.writer
+			, rb.contents
+			, rb.regDate
+		FROM reply_board rb
+		LEFT JOIN board b ON b.bno = rb.bno
+		WHERE b.bno = #{bno}
+	</select>
+
+</mapper>

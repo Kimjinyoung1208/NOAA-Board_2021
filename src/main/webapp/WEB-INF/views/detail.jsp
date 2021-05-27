@@ -26,6 +26,40 @@
 	<button id="updateBtn">수정</button>
 	<button id="deleteBtn">삭제</button>
 	<a href="/?num=1"><button>목록</button></a>
+	
+	<ul>
+<!-- 		<li> -->
+<!-- 			<div> -->
+<!-- 				<p>첫번째 댓글 작성자</p> -->
+<!-- 				<p>첫번째 댓글</p> -->
+<!-- 			</div> -->
+<!-- 		</li> -->
+<!-- 		<li> -->
+<!-- 			<div> -->
+<!-- 				<p>두번째 댓글 작성자</p> -->
+<!-- 				<p>두번째 댓글</p> -->
+<!-- 			</div> -->
+<!-- 		</li> -->
+<!-- 		<li> -->
+<!-- 			<div> -->
+<!-- 				<p>세번째 댓글 작성자</p> -->
+<!-- 				<p>세번째 댓글</p> -->
+<!-- 			</div> -->
+<!-- 		</li> -->
+	</ul>
+	
+	<div>
+		<p>
+			<label>댓글 작성자</label>
+			<input type="text" />
+		</p>
+		<p>
+			<textarea row="5" cols="50"></textarea>
+		</p>
+		<p>
+			<button type="button">댓글 작성</button>
+		</p>
+	</div>
 
 </body>
 

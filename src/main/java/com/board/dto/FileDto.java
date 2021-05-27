@@ -1,5 +1,7 @@
 package com.board.dto;
 
+import java.util.List;
+
 public class FileDto {
 	
 	private int fno;
@@ -14,7 +16,14 @@ public class FileDto {
 	private String sortOption;
 	private int num;
 	private String searchOption;
-	
+	private List<FileDto> fileDtoList;
+
+	public List<FileDto> getFileDtoList() {
+		return fileDtoList;
+	}
+	public void setFileDtoList(List<FileDto> fileDtoList) {
+		this.fileDtoList = fileDtoList;
+	}
 	public String getSearchOption() {
 		return searchOption;
 	}

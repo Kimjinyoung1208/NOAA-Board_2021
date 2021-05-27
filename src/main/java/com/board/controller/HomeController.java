@@ -256,5 +256,6 @@ public class HomeController {
 		if (viewCnt > 0) {
 			homeService.viewCount(bno);			
 		}
-	} 
+	}
+	
 }
